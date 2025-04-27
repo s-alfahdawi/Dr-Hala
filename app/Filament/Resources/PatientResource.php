@@ -53,11 +53,7 @@ class PatientResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')->label('الاسم')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('phone')
-    ->label('رقم الهاتف')
-    ->formatStateUsing(function ($state) {
-        return '0' . substr($state, 1, 3) . ' ' . substr($state, 4, 3) . ' ' . substr($state, 7);
-    }),
+                Tables\Columns\TextColumn::make('phone')->label('رقم الهاتف')->searchable(),
                 Tables\Columns\TextColumn::make('surgeries_count')
                 ->label('عدد العمليات')
                 ->counts('surgeries')
