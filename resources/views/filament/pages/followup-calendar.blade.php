@@ -8,6 +8,10 @@
     {{-- منطقة عرض التقويم --}}
     <div id="calendar"></div>
 
-    {{-- كود الجافا سكربت عبر Vite --}}
+    @if (app()->environment('production'))
+    <script src="{{ asset('build/assets/app-eMHK6VFw.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('build/assets/app-BgIs6n_x.css') }}">
+@else
     @vite(['resources/js/calendar.js'])
+@endif
 </x-filament::page>
