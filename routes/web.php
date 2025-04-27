@@ -7,16 +7,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// routes/web.php
 Route::get('/api/calendar-followups', function () {
     return Followup::with('patient') // تحميل العلاقة لتفادي N+1
         ->whereNotNull('followup_date')
         ->get()
-        ->map(fn($f) => [
-            'title' => "{$f->patient?->name} - {$f->type}", // اسم المريضة + نوع المتابعة
-            'start' => $f->followup_date->toDateString(),
-            'id'    => $f->id,
-        ]);
+        ->map(function ($f) {
+            return [
+                'title' => $f->patient?->name . ' - ' . ($f->followupTemplate?->name ?? ''),
+                'start' => $f->followup_date->toDateString(),
+                'id'    => $f->id,
+                'url'   => route('filament.admin.resources.patients.edit', $f->patient?->id), // رابط صفحة تعديل المريضة
+                'color' => $f->completed ? '#10B981' : '#EF4444', // أخضر إذا مكتمل، أحمر إذا غير مكتمل
+            ];
+        });
 });
 
 Route::post('/followups/{id}/mark-done', function ($id) {
