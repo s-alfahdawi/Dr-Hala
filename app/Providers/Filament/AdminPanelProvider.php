@@ -16,8 +16,8 @@ use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use Filament\Facades\Filament;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -28,7 +28,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->authGuard('web')
+            ->authGuard('web') // حدد الجارد web
             ->colors([
                 'primary' => Color::Purple,
             ])
@@ -60,9 +60,6 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ])
-            ->canAccessPanel(function () {
-                return auth()->check(); // ✅ أي مستخدم مسجل دخول يسمح له
-            });
+            ]);
     }
 }
