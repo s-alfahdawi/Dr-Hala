@@ -23,7 +23,10 @@ class PatientResource extends Resource
 {
     protected static ?string $model = Patient::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user';
+    protected static ?string $navigationLabel = 'المرضى'; 
+    protected static ?string $modelLabel = 'مريضة';
+    protected static ?string $pluralModelLabel = 'المرضى';
 
     public static function form(Form $form): Form
 {
@@ -78,7 +81,7 @@ class PatientResource extends Resource
                 Tables\Actions\DeleteAction::make(),
                 Tables\Actions\Action::make('sendWhatsApp')
                 ->icon('heroicon-o-chat-bubble-left-ellipsis')
-                ->label('WhatsApp')
+                ->label('مراسلة')
         ->color('success')
         ->icon('heroicon-o-chat-bubble-left')
         ->url(fn ($record) => 'https://wa.me/' . '964' . $record->phone . '?text=' . urlencode(

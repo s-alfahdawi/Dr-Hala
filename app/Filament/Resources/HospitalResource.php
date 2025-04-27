@@ -20,7 +20,10 @@ class HospitalResource extends Resource
 {
     protected static ?string $model = Hospital::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-building-office';
+    protected static ?string $navigationLabel = 'المستشفيات'; 
+    protected static ?string $modelLabel = 'مستشفى'; 
+    protected static ?string $pluralModelLabel = 'المستشفيات';
 
     public static function form(Form $form): Form
     {
@@ -53,7 +56,6 @@ class HospitalResource extends Resource
     public static function getRelations(): array
 {
     return [
-        \App\Filament\Resources\HospitalResource\RelationManagers\HospitalSurgeryRelationManager::class,
     ];
 }
 

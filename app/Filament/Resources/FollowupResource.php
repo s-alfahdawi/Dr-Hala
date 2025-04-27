@@ -20,7 +20,10 @@ use App\Filament\Resources\FollowupResource\Pages;
 class FollowupResource extends Resource
 {
     protected static ?string $model = Followup::class;
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
+    protected static ?string $navigationLabel = 'المتابعات'; 
+    protected static ?string $modelLabel = 'متابعة'; 
+    protected static ?string $pluralModelLabel = 'المتابعات';
 
     public static function form(Form $form): Form
     {
@@ -62,7 +65,7 @@ class FollowupResource extends Resource
                 TextColumn::make('followupTemplate.name')->label('نوع المتابعة')->sortable(),
                 BooleanColumn::make('completed')->label('تمت؟')->sortable(),
             ])
-            ->defaultSort('followup_date', 'desc') // ✅ ترتيب مبدئي فقط
+            ->defaultSort('followup_date', 'desc')
             ->filters([
                 Tables\Filters\SelectFilter::make('surgery_type_id')
                     ->label('نوع العملية')
@@ -111,7 +114,7 @@ class FollowupResource extends Resource
             ->actions([
                 Action::make('sendWhatsApp')
                 ->icon('heroicon-o-chat-bubble-left-ellipsis')
-                ->label('WhatsApp')
+                ->label('إرسال')
                     ->color('success')
                     ->url(fn ($record) => route('followups.send', $record))
                     ->openUrlInNewTab()

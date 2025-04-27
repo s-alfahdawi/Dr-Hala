@@ -33,7 +33,7 @@ class TodayFollowups extends BaseWidget
         return [
             Action::make('sendWhatsApp')
                 ->icon('heroicon-o-chat-bubble-left-ellipsis')
-                ->label('WhatsApp')
+                ->label('ارسال')
                 ->color('success')
                 ->url(function ($record) {
                     $firstName = explode(' ', $record->patient->name)[0] ?? 'صديقتنا';

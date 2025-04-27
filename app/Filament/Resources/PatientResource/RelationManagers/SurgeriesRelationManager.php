@@ -9,13 +9,26 @@ use Filament\Tables\Table;
 class SurgeriesRelationManager extends RelationManager
 {
     protected static string $relationship = 'surgeries';
+
+    protected static ?string $title = 'العمليات الجراحية'; // ✅ تعريب عنوان الجدول
+    
+    protected static ?string $pluralModelLabel = 'العمليات الجراحية'; // ✅ اسم الجمع
+    
+    protected static ?string $modelLabel = 'عملية جراحية'; // ✅ اسم المفرد
+
     public function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('date_of_surgery')->label('تاريخ العملية')->date(),
-                Tables\Columns\TextColumn::make('surgeryType.name')->label('نوع العملية'),
-                Tables\Columns\TextColumn::make('hospital.name')->label('المستشفى'),
+                Tables\Columns\TextColumn::make('date_of_surgery')
+                    ->label('تاريخ العملية')
+                    ->date(),
+
+                Tables\Columns\TextColumn::make('surgeryType.name')
+                    ->label('نوع العملية'),
+
+                Tables\Columns\TextColumn::make('hospital.name')
+                    ->label('اسم المستشفى'),
             ])
             ->actions([])
             ->bulkActions([]);

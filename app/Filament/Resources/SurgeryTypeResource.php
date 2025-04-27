@@ -22,7 +22,10 @@ class SurgeryTypeResource extends Resource
 {
     protected static ?string $model = SurgeryType::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-check';
+    protected static ?string $navigationLabel = 'أنواع العمليات'; 
+    protected static ?string $modelLabel = 'نوع عملية'; 
+    protected static ?string $pluralModelLabel = 'أنواع العمليات';
 
     public static function form(Form $form): Form
     {
@@ -73,7 +76,6 @@ class SurgeryTypeResource extends Resource
 public static function getRelations(): array
 {
     return [
-        \App\Filament\Resources\SurgeryTypeResource\RelationManagers\SurgeryRelationManager::class,
     ];
 }
 

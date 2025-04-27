@@ -19,7 +19,10 @@ class FollowupTemplateResource extends Resource
 {
     protected static ?string $model = FollowupTemplate::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
+    protected static ?string $navigationLabel = 'إجراءات المتابعة';
+    protected static ?string $modelLabel = 'إجراء متابعة';
+    protected static ?string $pluralModelLabel = 'إجراءات المتابعة';
 
     public static function form(Form $form): Form
     {

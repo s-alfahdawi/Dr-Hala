@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Providers;
-
+use App\Models\Surgery;
+use App\Observers\SurgeryObserver;
 use Illuminate\Support\ServiceProvider;
 use Filament\Forms\Components\DatePicker;
 use Carbon\Carbon;
@@ -17,7 +18,8 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        // ⬅️ هنا تضع DatePicker
+        Surgery::observe(SurgeryObserver::class);
+
         DatePicker::configureUsing(function (DatePicker $datePicker) {
             $datePicker->displayFormat('d/m/Y');
         });

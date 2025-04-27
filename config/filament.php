@@ -17,7 +17,7 @@ return [
     'logo' => '/images/logo_w.png', // ✅ لا تستخدم asset()
     'favicon' => '/images/favicon.ico',
 ],
-
+    'direction' => 'rtl',
     'broadcasting' => [
 
         // 'echo' => [
