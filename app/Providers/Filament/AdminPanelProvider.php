@@ -28,6 +28,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->authGuard('web')    <!-- استخدم الحارس web -->
             ->colors([
                 'primary' => Color::Purple,
             ])
@@ -59,6 +60,9 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->canAccessPanel(function () {
+                return auth()->check(); // ✅ أي مستخدم مسجل دخول يسمح له
+            });
     }
 }
