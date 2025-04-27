@@ -26,26 +26,30 @@ class SendFollowupsToTelegram extends Command
         } else {
             $count = $followups->count();
 
-            $message = "📅 *متابعات اليوم:*\n";
-            $message .= "عدد المتابعات: *{$count}*\n\n";
+            $message = "🌟 *تقرير متابعات اليوم*\n";
+            $message .= "📅 التاريخ: " . now()->format('d/m/Y') . "\n";
+            $message .= "📈 عدد المتابعات: *{$count}*\n";
+            $message .= "\n━━━━━━━━━━━━━━━━━━\n";
 
-            foreach ($followups as $followup) {
+            foreach ($followups as $index => $followup) {
                 $patientName = $followup->patient->name ?? '-';
                 $surgeryName = $followup->surgery->display_name ?? '-';
                 $followupTypeName = $followup->followupTemplate->name ?? '-';
 
-                $message .= "👩‍⚕️ *{$patientName}*\n";
-                $message .= "🔹 نوع المتابعة: _{$followupTypeName}_\n";
-                $message .= "🔹 العملية: _{$surgeryName}_\n\n";
+                $message .= "🔹 *" . ($index + 1) . ". {$patientName}*\n";
+                $message .= "   • نوع المتابعة: _{$followupTypeName}_\n";
+                $message .= "   • العملية: _{$surgeryName}_\n";
+                $message .= "━━━━━━━━━━━━━━━━━━\n";
             }
         }
 
-        Http::post("https://api.telegram.org/bot{$token}/sendMessage", [
+        $response = Http::post("https://api.telegram.org/bot{$token}/sendMessage", [
             'chat_id' => $chatId,
             'text' => $message,
             'parse_mode' => 'Markdown',
         ]);
+        dd($response->body());
 
-        $this->info('تم إرسال إشعار المتابعات بنجاح عبر تيليجرام.');
+        $this->info('✅ تم إرسال إشعار المتابعات بنجاح عبر تيليجرام.');
     }
 }
