@@ -8,25 +8,20 @@ use Carbon\Carbon;
 use App\Console\Commands\SendDailyFollowupsTelegram;
 use Illuminate\Console\Scheduling\Schedule;
 
-DatePicker::configureUsing(function (DatePicker $datePicker) {
-    $datePicker->displayFormat('d/m/Y');
-});
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     */
-    
     public function boot(): void
     {
+        // ⬅️ هنا تضع DatePicker
+        DatePicker::configureUsing(function (DatePicker $datePicker) {
+            $datePicker->displayFormat('d/m/Y');
+        });
+
         $this->app->booted(function () {
             $schedule = app(Schedule::class);
             $schedule->command(SendDailyFollowupsTelegram::class)
