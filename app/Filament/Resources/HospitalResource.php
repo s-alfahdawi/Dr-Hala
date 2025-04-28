@@ -36,6 +36,11 @@ class HospitalResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->paginated()
+            ->poll('30s')
+            ->emptyStateHeading('لا توجد سجلات متاحة')
+            ->emptyStateDescription('لا يوجد بيانات حالياً، حاول إضافة سجل جديد.')
+            ->striped()
             ->columns([
                 Tables\Columns\TextColumn::make('name')->label('المستشفى')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('location')->label('الموقع')->sortable()->searchable(),

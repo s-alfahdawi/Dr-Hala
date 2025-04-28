@@ -18,6 +18,7 @@ return [
     'favicon' => '/images/favicon.ico',
 ],
     'direction' => 'rtl',
+    'loading_indicator' => true,
     'broadcasting' => [
 
         // 'echo' => [

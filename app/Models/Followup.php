@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Followup extends Model
 {
@@ -12,27 +14,26 @@ class Followup extends Model
         'completed',
         'type',
         'notes',
-        'followup_template_id', // ✅ أضف هذا
+        'followup_template_id',
     ];
 
     protected $casts = [
-
         'followup_date' => 'datetime',
-'completed' => 'boolean',
+        'completed' => 'boolean',
     ];
 
-    public function surgery()
+    public function surgery(): BelongsTo
     {
-        return $this->belongsTo(\App\Models\Surgery::class);
+        return $this->belongsTo(Surgery::class);
     }
 
-    public function patient()
-{
-    return $this->belongsTo(Patient::class);
-}
+    public function patient(): BelongsTo
+    {
+        return $this->belongsTo(Patient::class);
+    }
 
-public function followupTemplate()
-{
-    return $this->belongsTo(FollowupTemplate::class);
-}
+    public function followupTemplate(): BelongsTo
+    {
+        return $this->belongsTo(FollowupTemplate::class);
+    }
 }

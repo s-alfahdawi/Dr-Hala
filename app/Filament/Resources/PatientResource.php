@@ -51,54 +51,50 @@ class PatientResource extends Resource
         ]);
 }
 
-    public static function table(Table $table): Table
-    {
-        return $table
-            ->columns([
-                Tables\Columns\TextColumn::make('name')->label('الاسم')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('phone')->label('رقم الهاتف')->searchable(),
-                Tables\Columns\TextColumn::make('surgeries_count')
+public static function table(Table $table): Table
+{
+    return $table
+    ->paginated()
+    ->poll('30s')
+    ->emptyStateHeading('لا توجد سجلات متاحة')
+    ->emptyStateDescription('لا يوجد بيانات حالياً، حاول إضافة سجل جديد.')
+    ->striped()
+        ->columns([
+            Tables\Columns\TextColumn::make('name')
+                ->label('الاسم')
+                ->sortable()
+                ->searchable(),
+            Tables\Columns\TextColumn::make('phone')
+                ->label('رقم الهاتف')
+                ->searchable(),
+            Tables\Columns\TextColumn::make('surgeries_count')
                 ->label('عدد العمليات')
                 ->counts('surgeries')
                 ->sortable(),
-            ])
-            ->filters([
-                // ✅ فلتر تاريخ إنشاء المريضة
-                Tables\Filters\Filter::make('created_at')
-                    ->label('تاريخ الإضافة')
-                    ->form([
-                        Forms\Components\DatePicker::make('from')->label('من'),
-                        Forms\Components\DatePicker::make('to')->label('إلى'),
-                    ])
-                    ->query(fn ($query, $data) => $query
-                        ->when($data['from'], fn ($q) => $q->whereDate('created_at', '>=', $data['from']))
-                        ->when($data['to'], fn ($q) => $q->whereDate('created_at', '<=', $data['to']))
-                    ),
-            ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-                Tables\Actions\Action::make('sendWhatsApp')
-                ->icon('heroicon-o-chat-bubble-left-ellipsis')
-                ->label('مراسلة')
-        ->color('success')
-        ->icon('heroicon-o-chat-bubble-left')
-        ->url(fn ($record) => 'https://wa.me/' . '964' . $record->phone . '?text=' . urlencode(
-            "مرحبا حبيبتنا " . explode(' ', $record->name)[0] . ",\n\nوياج فريق عيادة الدكتورة حلا التميمي"
-        ))
-        ->openUrlInNewTab()
-        ->requiresConfirmation()
-        ->visible(fn ($record) => !empty($record->phone)),
-])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ])
-            ->defaultSort('created_at', 'desc') // ترتيب افتراضي حسب الإضافة
-            ->paginated();
-    }
+        ])
+        ->filters([
+            Tables\Filters\Filter::make('created_at')
+                ->label('تاريخ الإضافة')
+                ->form([
+                    Forms\Components\DatePicker::make('from')->label('من'),
+                    Forms\Components\DatePicker::make('to')->label('إلى'),
+                ])
+                ->query(fn ($query, $data) => $query
+                    ->when($data['from'], fn ($q) => $q->whereDate('created_at', '>=', $data['from']))
+                    ->when($data['to'], fn ($q) => $q->whereDate('created_at', '<=', $data['to']))),
+        ])
+        ->actions([
+            Tables\Actions\ViewAction::make(),
+            Tables\Actions\EditAction::make(),
+            Tables\Actions\DeleteAction::make(),
+        ])
+        ->bulkActions([
+            Tables\Actions\BulkActionGroup::make([
+                Tables\Actions\DeleteBulkAction::make(),
+            ]),
+        ])
+        ->defaultSort('created_at', 'desc');
+}
 
     public static function getRelations(): array
 {

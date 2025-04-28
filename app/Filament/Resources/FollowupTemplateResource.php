@@ -46,6 +46,11 @@ class FollowupTemplateResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->paginated()
+            ->poll('30s')
+            ->emptyStateHeading('لا توجد سجلات متاحة')
+            ->emptyStateDescription('لا يوجد بيانات حالياً، حاول إضافة سجل جديد.')
+            ->striped()
             ->columns([
                 Tables\Columns\TextColumn::make('name')->label('الاسم')->searchable(),
                 Tables\Columns\TextColumn::make('days_after_surgery')->label('عدد الأيام'),

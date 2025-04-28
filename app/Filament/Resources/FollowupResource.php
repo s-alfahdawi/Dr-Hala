@@ -16,7 +16,7 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\BooleanColumn;
 use App\Filament\Resources\FollowupResource\Pages;
-
+use Illuminate\Database\Eloquent\Builder;
 class FollowupResource extends Resource
 {
     protected static ?string $model = Followup::class;
@@ -58,6 +58,11 @@ class FollowupResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->paginated()
+            ->poll('30s')
+            ->emptyStateHeading('لا توجد سجلات متاحة')
+            ->emptyStateDescription('لا يوجد بيانات حالياً، حاول إضافة سجل جديد.')
+            ->striped()
             ->columns([
                 TextColumn::make('patient.name')->label('المريضة')->searchable()->sortable(),
                 TextColumn::make('surgery.display_name')->label('العملية')->sortable(),
@@ -113,8 +118,8 @@ class FollowupResource extends Resource
             ])
             ->actions([
                 Action::make('sendWhatsApp')
-                ->icon('heroicon-o-chat-bubble-left-ellipsis')
-                ->label('إرسال')
+                    ->icon('heroicon-o-chat-bubble-left-ellipsis')
+                    ->label('إرسال')
                     ->color('success')
                     ->url(fn ($record) => route('followups.send', $record))
                     ->openUrlInNewTab()
@@ -136,4 +141,14 @@ class FollowupResource extends Resource
             'edit' => Pages\EditFollowup::route('/{record}/edit'),
         ];
     }
+
+    public static function getEloquentQuery(): Builder
+{
+    return parent::getEloquentQuery()
+        ->with([
+            'patient',
+            'surgery',
+            'followupTemplate',
+        ]);
+}
 }

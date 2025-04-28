@@ -19,16 +19,15 @@ class SurgeriesRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
+        ->paginated()
+        ->poll('30000')
+        ->emptyStateHeading('لا توجد سجلات مرتبطة')
+        ->emptyStateDescription('لم يتم إضافة بيانات مرتبطة بعد.')
+        ->striped()
             ->columns([
-                Tables\Columns\TextColumn::make('date_of_surgery')
-                    ->label('تاريخ العملية')
-                    ->date(),
-
-                Tables\Columns\TextColumn::make('surgeryType.name')
-                    ->label('نوع العملية'),
-
-                Tables\Columns\TextColumn::make('hospital.name')
-                    ->label('اسم المستشفى'),
+                Tables\Columns\TextColumn::make('date_of_surgery')->label('تاريخ العملية')->date(),
+                Tables\Columns\TextColumn::make('surgeryType.name')->label('نوع العملية'),
+                Tables\Columns\TextColumn::make('hospital.name')->label('المستشفى'),
             ])
             ->actions([])
             ->bulkActions([]);

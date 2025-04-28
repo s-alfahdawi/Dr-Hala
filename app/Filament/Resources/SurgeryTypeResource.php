@@ -44,6 +44,11 @@ class SurgeryTypeResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->paginated()
+            ->poll('30s')
+            ->emptyStateHeading('لا توجد سجلات متاحة')
+            ->emptyStateDescription('لا يوجد بيانات حالياً، حاول إضافة سجل جديد.')
+            ->striped()
             ->columns([
                 TextColumn::make('name')
                     ->label('اسم العملية')

@@ -3,27 +3,24 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Patient extends Model
 {
     protected $fillable = ['name', 'phone'];
 
-    public function surgeries()
+    public function surgeries(): HasMany
     {
         return $this->hasMany(Surgery::class);
     }
 
-    public function followups()
+    public function followups(): HasMany
     {
-        return $this->hasMany(\App\Models\Followup::class);
+        return $this->hasMany(Followup::class);
     }
 
-    // لعرض الاسم + رقم الهاتف في الواجهة
     public function getDisplayNameAttribute(): string
     {
         return "{$this->name} - {$this->phone}";
     }
 }
-
-
-
