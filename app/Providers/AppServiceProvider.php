@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->booted(function () {
             $schedule = app(Schedule::class);
-            $schedule->command('followups:telegram') // ✅ يجب أن يكون اسم الكوماند وليس الكلاس
+            $schedule->command('followups:telegram')
                 ->dailyAt('13:00');
         });
     }

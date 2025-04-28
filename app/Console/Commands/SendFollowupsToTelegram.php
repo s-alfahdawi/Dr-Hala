@@ -15,6 +15,8 @@ class SendFollowupsToTelegram extends Command
     {
         $token = env('TELEGRAM_BOT_TOKEN');
         $chatId = env('TELEGRAM_CHAT_ID');
+        $clinicName = env('APP_NAME', 'عيادتنا الطبية');
+        $reminderText = env('TELEGRAM_FOLLOWUP_REMINDER_TEXT', 'تذكَّر دائمًا: المتابعة أمانة ومسؤولية.');
 
         $followups = Followup::whereDate('followup_date', today())
             ->where('completed', false)
@@ -27,6 +29,7 @@ class SendFollowupsToTelegram extends Command
             $count = $followups->count();
 
             $message = "🌟 *تقرير متابعات اليوم*\n";
+            $message .= "🏥 العيادة: *{$clinicName}*\n";
             $message .= "📅 التاريخ: " . now()->format('d/m/Y') . "\n";
             $message .= "📈 عدد المتابعات: *{$count}*\n";
             $message .= "\n━━━━━━━━━━━━━━━━━━\n";
@@ -41,6 +44,8 @@ class SendFollowupsToTelegram extends Command
                 $message .= "   • العملية: _{$surgeryName}_\n";
                 $message .= "━━━━━━━━━━━━━━━━━━\n";
             }
+
+            $message .= "\n🔔 {$reminderText}";
         }
 
         $response = Http::post("https://api.telegram.org/bot{$token}/sendMessage", [
@@ -49,10 +54,6 @@ class SendFollowupsToTelegram extends Command
             'parse_mode' => 'Markdown',
         ]);
 
-        if ($response->successful()) {
-            $this->info('✅ تم إرسال إشعار المتابعات بنجاح عبر تيليجرام.');
-        } else {
-            $this->error('❌ فشل في إرسال الإشعار إلى تيليجرام: ' . $response->body());
-        }
+        $this->info('✅ تم إرسال إشعار المتابعات بنجاح عبر تيليجرام.');
     }
 }

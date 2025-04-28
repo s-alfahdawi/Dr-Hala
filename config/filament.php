@@ -14,8 +14,8 @@ return [
     |
     */
 'brand' => [
-    'logo' => '/images/logo_w.png', // ✅ لا تستخدم asset()
     'favicon' => '/images/favicon.ico',
+    'name' => env('APP_NAME'),
 ],
     'direction' => 'rtl',
     'loading_indicator' => true,

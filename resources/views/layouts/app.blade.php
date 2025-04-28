@@ -9,7 +9,6 @@
 </style>
     <meta charset="UTF-8">
     <title>{{ $title ?? 'لوحة التحكم' }}</title>
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
 
