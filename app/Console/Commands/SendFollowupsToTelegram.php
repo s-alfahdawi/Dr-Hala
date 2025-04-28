@@ -48,8 +48,11 @@ class SendFollowupsToTelegram extends Command
             'text' => $message,
             'parse_mode' => 'Markdown',
         ]);
-        dd($response->body());
 
-        $this->info('✅ تم إرسال إشعار المتابعات بنجاح عبر تيليجرام.');
+        if ($response->successful()) {
+            $this->info('✅ تم إرسال إشعار المتابعات بنجاح عبر تيليجرام.');
+        } else {
+            $this->error('❌ فشل في إرسال الإشعار إلى تيليجرام: ' . $response->body());
+        }
     }
 }
