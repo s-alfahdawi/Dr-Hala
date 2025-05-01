@@ -13,10 +13,8 @@ class SendFollowupsToTelegram extends Command
 
     public function handle()
     {
-        $token = env('TELEGRAM_BOT_TOKEN');
-        $chatId = env('TELEGRAM_CHAT_ID');
-        $clinicName = env('APP_NAME', 'عيادتنا الطبية');
-        $reminderText = env('TELEGRAM_FOLLOWUP_REMINDER_TEXT', 'تذكَّر دائمًا: المتابعة أمانة ومسؤولية.');
+        $clinicName = config('app.name');
+        $reminderText = config('app.followup_reminder_text');
 
         $followups = Followup::whereDate('followup_date', today())
             ->where('completed', false)

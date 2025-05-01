@@ -14,6 +14,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'followup_reminder_text' => env('TELEGRAM_FOLLOWUP_REMINDER_TEXT'),
 
     /*
     |--------------------------------------------------------------------------
