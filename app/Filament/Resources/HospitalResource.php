@@ -24,6 +24,7 @@ class HospitalResource extends Resource
     protected static ?string $navigationLabel = 'المستشفيات'; 
     protected static ?string $modelLabel = 'مستشفى'; 
     protected static ?string $pluralModelLabel = 'المستشفيات';
+    protected static ?string $navigationGroup = 'الإعدادات';
 
     public static function form(Form $form): Form
     {

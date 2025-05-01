@@ -23,6 +23,7 @@ class FollowupTemplateResource extends Resource
     protected static ?string $navigationLabel = 'إجراءات المتابعة';
     protected static ?string $modelLabel = 'إجراء متابعة';
     protected static ?string $pluralModelLabel = 'إجراءات المتابعة';
+    protected static ?string $navigationGroup = 'الإعدادات';
 
     public static function form(Form $form): Form
     {

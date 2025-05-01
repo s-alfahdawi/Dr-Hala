@@ -26,6 +26,7 @@ class SurgeryTypeResource extends Resource
     protected static ?string $navigationLabel = 'أنواع العمليات'; 
     protected static ?string $modelLabel = 'نوع عملية'; 
     protected static ?string $pluralModelLabel = 'أنواع العمليات';
+    protected static ?string $navigationGroup = 'الإعدادات';
 
     public static function form(Form $form): Form
     {

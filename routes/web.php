@@ -1,11 +1,21 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Api\ArticleController;
 use App\Models\Followup;
+use App\Http\Controllers\Api\CertificateController;
+use App\Http\Controllers\Api\TestimonialController;
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/api/articles', [ArticleController::class, 'index']);
+Route::get('/api/articles/{id}', [ArticleController::class, 'show']);
+
+
+Route::get('/api/certificates', [CertificateController::class, 'index']);
+Route::get('/api/testimonials', [TestimonialController::class, 'index']);
 
 Route::get('/api/calendar-followups', function () {
     return Followup::with('patient') // تحميل العلاقة لتفادي N+1
